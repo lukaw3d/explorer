@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
+import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -18,6 +19,7 @@ type TokensCardProps = {
 export const TokensCard: FC<TokensCardProps> = ({ type }) => {
   const { t } = useTranslation()
   const { address } = useParams()
+  const locationHash = useLocation().hash.replace('#', '')
   const tokenLabel = t(`account.${type}`)
   const tokenListLabel = t('account.tokensListTitle', { token: tokenLabel })
   const tableColumns = [
@@ -38,7 +40,11 @@ export const TokensCard: FC<TokensCardProps> = ({ type }) => {
         key: 'name',
       },
       {
-        content: <CopyToClipboard value={item.token_contract_addr} />,
+        content: (
+          <Box id={item.token_contract_addr}>
+            <CopyToClipboard value={item.token_contract_addr} />
+          </Box>
+        ),
         key: 'hash',
       },
       {
@@ -52,6 +58,7 @@ export const TokensCard: FC<TokensCardProps> = ({ type }) => {
         key: 'ticker',
       },
     ],
+    highlight: item.token_contract_addr === locationHash,
   }))
 
   return (
