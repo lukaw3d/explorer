@@ -18,7 +18,6 @@ import { AccountLink } from '../../components/Account/AccountLink'
 import { Divider } from '@mui/material'
 import Alert from '@mui/material/Alert'
 import { styled } from '@mui/material/styles'
-import { trimLongString } from '../../utils/trimLongString'
 import { CopyToClipboard } from '../../components/CopyToClipboard'
 
 type TransactionSelectionResult = {
@@ -113,8 +112,7 @@ export const TransactionDetailPage: FC = () => {
           <StyledDescriptionList titleWidth="200px">
             <dt>{t('common.hash')}</dt>
             <dd>
-              {isMobile ? trimLongString(transaction.hash) : transaction.hash}
-              <CopyToClipboard value={transaction.hash} label={' '} />
+              <CopyToClipboard value={transaction.hash} />
             </dd>
 
             <dt>{t('common.status')}</dt>
@@ -139,14 +137,16 @@ export const TransactionDetailPage: FC = () => {
 
             <dt>{t('common.from')}</dt>
             <dd>
-              <AccountLink address={transaction.sender_0} paratime={ParaTime.Emerald} />
-              <CopyToClipboard value={transaction.sender_0} label={' '} />
+              <AccountLink
+                address={transaction.sender_0}
+                paratime={ParaTime.Emerald}
+                copyToClipboard={true}
+              />
             </dd>
 
             <dt>{t('common.to')}</dt>
             <dd>
-              <AccountLink address={transaction.to!} paratime={ParaTime.Emerald} />
-              <CopyToClipboard value={transaction.to!} label={' '} />
+              <AccountLink address={transaction.to!} paratime={ParaTime.Emerald} copyToClipboard={true} />
             </dd>
 
             <dt>{t('common.value')}</dt>
