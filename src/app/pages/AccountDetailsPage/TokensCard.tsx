@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams, useLocation } from 'react-router-dom'
+import { useParams, useLocation, useLoaderData } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
@@ -18,7 +18,7 @@ type TokensCardProps = {
 
 export const TokensCard: FC<TokensCardProps> = ({ type }) => {
   const { t } = useTranslation()
-  const { address } = useParams()
+  const address = useLoaderData() as string
   const locationHash = useLocation().hash.replace('#', '')
   const tokenLabel = t(`account.${type}`)
   const tokenListLabel = t('account.tokensListTitle', { token: tokenLabel })
